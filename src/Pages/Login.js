@@ -36,12 +36,13 @@ class Login extends Component {
   render() {
     const { isActive, loadingScreen, loaded } = this.state;
     return (
-      <section data-testid="page-login">
+      <section className="login-page" data-testid="page-login">
 
         {loadingScreen && <Loading />}
         {loaded && <Redirect to="/search" />}
         <form>
           <input
+            className="input-name"
             type="text"
             name="input-name"
             data-testid="login-name-input"
@@ -49,6 +50,7 @@ class Login extends Component {
             onChange={ this.saveUser }
           />
           <button
+            className="input-btn"
             name="login-btn"
             type="submit"
             data-testid="login-submit-button"
