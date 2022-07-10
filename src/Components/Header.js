@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import Loading from '../Pages/Loading';
 import { getUser } from '../services/userAPI';
+import './HeaderStyle.css';
 
 class Header extends Component {
   constructor() {
@@ -26,10 +28,13 @@ class Header extends Component {
     const { loadingScreen, userName } = this.state;
     if (loadingScreen) return <Loading />;
     return (
-      <header data-testid="header-component">
+      <header className="header" data-testid="header-component">
         <p data-testid="header-user-name">
           {`Olá ${userName}`}
         </p>
+        <Link data-testid="link-to-search" to="/search">Pesquisa</Link>
+        <Link data-testid="link-to-favorites" to="/favorites">favoritas</Link>
+        <Link data-testid="link-to-profile" to="/profile">perfil</Link>
       </header>
     );
   }
