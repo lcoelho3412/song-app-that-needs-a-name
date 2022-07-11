@@ -9,17 +9,17 @@ class Login extends Component {
 
     this.state = {
       userName: '',
-      isActive: true,
+      isButtonDisabled: true,
       loadingScreen: false,
       loaded: false,
     };
   }
 
   saveUser = (event) => {
-    const min = 3;
-    if (event.target.value.length >= min) {
+    const minCharacters = 3;
+    if (event.target.value.length >= minCharacters) {
       this.setState({
-        isActive: false,
+        isButtonDisabled: false,
         userName: event.target.value,
       });
     }
@@ -34,7 +34,7 @@ class Login extends Component {
   }
 
   render() {
-    const { isActive, loadingScreen, loaded } = this.state;
+    const { isButtonDisabled, loadingScreen, loaded } = this.state;
     return (
       <section className="login-page" data-testid="page-login">
 
@@ -54,7 +54,7 @@ class Login extends Component {
             name="login-btn"
             type="submit"
             data-testid="login-submit-button"
-            disabled={ isActive }
+            disabled={ isButtonDisabled }
             onClick={ this.login }
           >
 
