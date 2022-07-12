@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Header from '../Components/Header';
 import getMusics from '../services/musicsAPI';
+import MusicCard from './MusicCard';
+import { getFavoriteSongs } from '../services/favoriteSongsAPI';
 
 class Album extends Component {
   constructor(props) {
@@ -14,14 +16,15 @@ class Album extends Component {
     };
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     this.requisition();
+    const favoriteSongs = await getFavoriteSongs();
+    console.log(favoriteSongs);
   }
 
   requisition = async () => {
     const { match: { params: { id } } } = this.props;
     const artistSong = await getMusics(id);
-    console.log(artistSong);
     this.setState({
       artist: artistSong[0].artistName,
       collection: artistSong[0].collectionName,
@@ -32,7 +35,6 @@ class Album extends Component {
 
   render() {
     const { artist, collection, music, image } = this.state;
-    console.log({ music });
     return (
       <>
         <Header />
@@ -42,20 +44,14 @@ class Album extends Component {
           <br />
           <h2 data-testid="artist-name">{artist}</h2>
           <h4 data-testid="album-name">{collection}</h4>
-          {music.map((song) => (
-            <div
-              key={ song.trackId }
-              music={ song }
-              data-testid="audio-component"
-            >
-              <p>{song.artist}</p>
-              <ul>
-                <li>
-                  { song.trackName }
-                </li>
-              </ul>
-            </div>
-
+          {music.map((song, index) => (
+            <MusicCard
+              key={ index }
+              trackId={ song.trackId }
+              artist={ song.artist }
+              song={ song }
+              trackName={ song.trackName }
+            />
           ))}
         </section>
       </>
